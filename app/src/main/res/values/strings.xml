@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="select_school_button">Select</string>
+    <string name="select_school_label">Select School</string>
+    <string name="empty_school_message">School must be selected</string>
+    <string name="nav_change_school">Change school</string>
 </resources>
