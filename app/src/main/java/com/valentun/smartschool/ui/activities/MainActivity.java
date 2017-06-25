@@ -1,16 +1,21 @@
 package com.valentun.smartschool.ui.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.valentun.smartschool.R;
+import com.valentun.smartschool.ui.fragments.GroupsFragment;
+import com.valentun.smartschool.ui.fragments.MyScheduleFragment;
+import com.valentun.smartschool.ui.fragments.TeachersFragment;
 import com.valentun.smartschool.utils.PreferenceUtils;
 
 import butterknife.BindView;
@@ -19,12 +24,11 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FragmentManager fragmentManager;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
-
-    // TODO delete it when server will be prepared
-    @BindView(R.id.testIdTextView) TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +39,11 @@ public class MainActivity extends BaseActivity
 
         if (!PreferenceUtils.isSchoolSelected(this)) startNewTaskIntent(ChooseSchoolActivity.class);
 
-        long schoolId = PreferenceUtils.getSelectedSchool(this);
+        initializeNavDrawer();
 
-        // TODO DELETE IT TOO
-        textView.setText(String.valueOf(schoolId));
+        fragmentManager = getSupportFragmentManager();
 
-
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
+        setInitialState();
     }
 
     @Override
@@ -63,19 +58,14 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -85,18 +75,62 @@ public class MainActivity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Class<? extends Fragment> fragmentClass = null;
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case R.id.nav_my_schedule:
+                fragmentClass = MyScheduleFragment.class;
+                break;
+            case R.id.nav_groups:
+                fragmentClass = GroupsFragment.class;
+                break;
+            case R.id.nav_teachers:
+                fragmentClass = TeachersFragment.class;
+                break;
             case R.id.nav_change_school:
                 PreferenceUtils.deleteSelectedSchool(this);
                 startNewTaskIntent(ChooseSchoolActivity.class);
                 break;
             default:
+                fragmentClass = MyScheduleFragment.class;
         }
+
+        if (fragmentClass != null) replaceFragmentFromClass(fragmentClass);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
+    }
+
+    private void initializeNavDrawer() {
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        drawer.setFitsSystemWindows(true);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setInitialState() {
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, MyScheduleFragment.newInstance())
+                .commit();
+        navigationView.setCheckedItem(R.id.nav_my_schedule);
+    }
+
+    private void replaceFragmentFromClass(Class<? extends Fragment> fragmentClass){
+        try {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragmentClass.newInstance())
+                    .commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

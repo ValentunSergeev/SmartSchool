@@ -3,10 +3,22 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_change_school">Change school</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_my_schedule">My Schedule</string>
 
-    <string name="action_settings">Settings</string>
     <string name="select_school_button">Select</string>
     <string name="select_school_label">Select School</string>
+    <string name="autocomplete_hint">Begin entering the school\'s name…</string>
     <string name="empty_school_message">School must be selected</string>
-    <string name="nav_change_school">Change school</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_groups">Groups</string>
+    <string name="nav_teachers">Teachers</string>
+
+    <!-- TODO delete placeholder strings -->
+    <string name="base_my_schedule_fragment_message">My schedule fragment</string>
+    <string name="base_groups_fragment_message">Groups fragment</string>
+    <string name="base_teachers_fragment_message">Teachers fragment</string>
+
 </resources>

@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_schedule_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_schedule"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/nav_my_schedule" />
+        <item
+            android:id="@+id/nav_groups"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/nav_groups" />
+        <item
+            android:id="@+id/nav_teachers"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:title="@string/nav_teachers" />
+    </group>
+    <group>
         <item
             android:id="@+id/nav_change_school"
-            android:title="@string/nav_change_school"
-            android:icon="@drawable/ic_exit_black_24dp">
-        </item>
+            android:icon="@drawable/ic_exit_black_24dp"
+            android:title="@string/nav_change_school" />
     </group>
 </menu>

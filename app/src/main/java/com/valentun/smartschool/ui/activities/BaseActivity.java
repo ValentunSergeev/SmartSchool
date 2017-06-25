@@ -19,7 +19,8 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void startNewTaskIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 }

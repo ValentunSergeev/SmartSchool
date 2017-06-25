@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.valentun.smartschool.DTO.School;
 import com.valentun.smartschool.R;
-import com.valentun.smartschool.utils.MockDataUtils;
+import com.valentun.smartschool.utils.FakeDataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class ChooseSchoolAutocompleteAdapter extends BaseAdapter implements Filt
      */
     private List<School> findSchools(String schoolName) {
         //TODO add retrofit request instead mock data search
-        return MockDataUtils.findSchools(schoolName, MAX_RESULTS);
+        return FakeDataUtils.findSchools(schoolName, MAX_RESULTS);
     }
 
 }
