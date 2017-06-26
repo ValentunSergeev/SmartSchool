@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 
 import com.valentun.smartschool.DTO.School;
 import com.valentun.smartschool.R;
-import com.valentun.smartschool.adapters.ChooseSchoolAutocompleteAdapter;
+import com.valentun.smartschool.adapters.SchoolAutocompleteAdapter;
 import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
 import com.valentun.smartschool.utils.PreferenceUtils;
 
@@ -19,7 +19,7 @@ import butterknife.OnClick;
 
 public class ChooseSchoolActivity extends BaseActivity {
 
-    @BindView(R.id.school_name_chooser) DelayAutoCompleteTextView schoolNameChooser;
+    @BindView(R.id.autocomplete_chooser_view) DelayAutoCompleteTextView schoolNameChooser;
     @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
     @BindView(R.id.school_choose_container) ConstraintLayout container;
 
@@ -48,7 +48,7 @@ public class ChooseSchoolActivity extends BaseActivity {
 
     private void initializeAutoCompleteView() {
         schoolNameChooser.setThreshold(1);
-        schoolNameChooser.setAdapter(new ChooseSchoolAutocompleteAdapter(this));
+        schoolNameChooser.setAdapter(new SchoolAutocompleteAdapter(this));
         schoolNameChooser.setLoadingIndicator(progressBar);
         schoolNameChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

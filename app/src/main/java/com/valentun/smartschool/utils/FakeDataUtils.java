@@ -10,21 +10,21 @@ import java.util.ArrayList;
  */
 
 public class FakeDataUtils {
-    private static final ArrayList<School> allSchools = buildAllSchools();
-    public static final ArrayList<Group> allGroups = buildGroups();
-
     private static final int SCHOOLS_COUNT = 100;
     private static final int SCHOOLS_IN_CITY = 10;
-
     private static final int GROUPS_COUNT = 11;
+
     private static final String[] GROUP_POSTFIXES = {"A", "B", "C"};
+
+    private static final ArrayList<School> allSchools = buildAllSchools();
+    public static final ArrayList<Group> allGroups = buildGroups();
 
 
     private static ArrayList<Group> buildGroups() {
         ArrayList<Group> result = new ArrayList<>();
         for (int i = 0; i < GROUPS_COUNT ; i++) {
-            for (String postfix: GROUP_POSTFIXES) {
-                result.add(new Group(i, (i + 1) + postfix));
+            for (int j = 0; j < GROUP_POSTFIXES.length; j++) {
+                result.add(new Group(i*10 + j, (i + 1) + GROUP_POSTFIXES[j]));
             }
         }
         return result;

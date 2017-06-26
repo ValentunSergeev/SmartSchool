@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.valentun.smartschool.R;
+import com.valentun.smartschool.utils.PreferenceUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,8 +18,11 @@ import butterknife.ButterKnife;
 public class DayScheduleFragment extends Fragment {
 
     public static final String DAY_OF_WEEK_KEY = "weekDay";
-    @BindView(R.id.day_detail_text)
-    TextView textView;
+
+    private static long groupId = PreferenceUtils.DEFAULT_ID_VALUE;
+
+    @BindView(R.id.day_detail_text) TextView textView;
+
     private int weekDay;
 
     public static DayScheduleFragment newInstance(int dayOfWeek) {
@@ -50,6 +54,16 @@ public class DayScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        textView.setText(String.valueOf(weekDay));
+        showFakeMessage();
+    }
+
+    //TODO delete when after retrofit's integration
+    private void showFakeMessage(){
+        String message = "Group id:" + groupId + "\n" + "Week day id: " + weekDay;
+        textView.setText(message);
+    }
+
+    public static void setGroupId(long groupId) {
+        DayScheduleFragment.groupId = groupId;
     }
 }
