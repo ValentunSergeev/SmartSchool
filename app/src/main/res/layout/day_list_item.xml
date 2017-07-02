@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/lesson_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lesson_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:text="Math"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toTopOf="@+id/lesson_teacher"
+        app:layout_constraintLeft_toRightOf="@+id/lesson_start_time"
+        app:layout_constraintTop_toTopOf="@+id/lesson_number" />
+
+    <TextView
+        android:id="@+id/lesson_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9:00"
+        app:layout_constraintBottom_toBottomOf="@+id/lesson_number"
+        app:layout_constraintLeft_toLeftOf="@+id/lesson_start_time"
+        app:layout_constraintTop_toBottomOf="@+id/lesson_start_time" />
+
+    <TextView
+        android:id="@+id/lesson_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="8:20"
+        app:layout_constraintBottom_toTopOf="@+id/lesson_end_time"
+        app:layout_constraintLeft_toRightOf="@+id/lesson_number"
+        app:layout_constraintTop_toTopOf="@+id/lesson_number" />
+
+    <TextView
+        android:id="@+id/lesson_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kozlova T.A."
+        app:layout_constraintBottom_toBottomOf="@+id/lesson_number"
+        app:layout_constraintLeft_toLeftOf="@+id/lesson_name"
+        app:layout_constraintTop_toBottomOf="@+id/lesson_name" />
+
+    <TextView
+        android:id="@+id/lesson_room_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="0dp"
+        android:text="326"
+        app:layout_constraintBottom_toBottomOf="@+id/lesson_teacher"
+        app:layout_constraintLeft_toRightOf="@+id/lesson_teacher"
+        app:layout_constraintTop_toTopOf="@+id/lesson_teacher"
+        app:layout_constraintVertical_bias="0.0" />
+</android.support.constraint.ConstraintLayout>

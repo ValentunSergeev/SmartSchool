@@ -4,11 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.valentun.smartschool.ui.fragments.DayScheduleFragment">
 
-    <TextView
-        android:id="@+id/day_detail_text"
-        android:gravity="center"
+    <ProgressBar
+        android:id="@+id/day_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/day_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:text="week day id"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

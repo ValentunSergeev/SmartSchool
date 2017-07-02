@@ -107,7 +107,7 @@ public class MyScheduleFragment extends Fragment {
                     getString(R.string.empty_group_message), Snackbar.LENGTH_LONG)
                     .show();
         } else {
-            UIUtils.hideKeybodard(getActivity());
+            UIUtils.hideKeyboard(getActivity());
             PreferenceUtils.setSelectedGroup(context, group.getId());
             DayScheduleFragment.setGroupId(PreferenceUtils.getSelectedGroup(context));
             showViewPager();
@@ -130,6 +130,7 @@ public class MyScheduleFragment extends Fragment {
 
         MyScheduleSlideAdapter adapter = new MyScheduleSlideAdapter(getChildFragmentManager());
         pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(7);
         tabLayout.setupWithViewPager(pager);
 
         pager.setCurrentItem(DateUtils.ViewPagerUtils.getCurrentDayPosition());
@@ -149,4 +150,5 @@ public class MyScheduleFragment extends Fragment {
             }
         });
     }
+
 }

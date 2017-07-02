@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_change_school:
                 PreferenceUtils.deleteSelectedSchool(this);
+                PreferenceUtils.deleteSelectedGroup(this);
                 startNewTaskIntent(ChooseSchoolActivity.class);
                 break;
             default:

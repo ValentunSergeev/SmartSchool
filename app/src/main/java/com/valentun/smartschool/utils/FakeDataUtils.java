@@ -1,9 +1,11 @@
 package com.valentun.smartschool.utils;
 
 import com.valentun.smartschool.DTO.Group;
+import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.DTO.School;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Valentun on 22.06.2017.
@@ -58,5 +60,16 @@ public class FakeDataUtils {
             }
         }
         return searchResult;
+    }
+
+    public static ArrayList<Lesson> generateLessons() {
+        Random random = new Random();
+        int count = random.nextInt(3) + 5;
+        ArrayList<Lesson> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Lesson lesson = new Lesson();
+            result.add(lesson);
+        }
+        return result;
     }
 }

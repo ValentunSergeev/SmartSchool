@@ -2,15 +2,23 @@ package com.valentun.smartschool.ui.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
+import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.R;
+import com.valentun.smartschool.adapters.DayAdapter;
+import com.valentun.smartschool.utils.FakeDataUtils;
 import com.valentun.smartschool.utils.PreferenceUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +29,13 @@ public class DayScheduleFragment extends Fragment {
 
     private static long groupId = PreferenceUtils.DEFAULT_ID_VALUE;
 
-    @BindView(R.id.day_detail_text) TextView textView;
+    @BindView(R.id.day_progress)
+    ProgressBar progressBar;
+    @BindView(R.id.day_list)
+    RecyclerView recyclerView;
 
     private int weekDay;
+    private ArrayList<Lesson> lessons;
 
     public static DayScheduleFragment newInstance(int dayOfWeek) {
         DayScheduleFragment fragment = new DayScheduleFragment();
@@ -33,6 +45,10 @@ public class DayScheduleFragment extends Fragment {
 
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void setGroupId(long groupId) {
+        DayScheduleFragment.groupId = groupId;
     }
 
     @Override
@@ -53,17 +69,31 @@ public class DayScheduleFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        showFakeMessage();
     }
 
-    //TODO delete when after retrofit's integration
-    private void showFakeMessage(){
-        String message = "Group id:" + groupId + "\n" + "Week day id: " + weekDay;
-        textView.setText(message);
+    private void initRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new DayAdapter(lessons));
     }
 
-    public static void setGroupId(long groupId) {
-        DayScheduleFragment.groupId = groupId;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && lessons == null) {
+            makeRequest();
+        }
+    }
+
+    // TODO replace with retrofit's request
+    private void makeRequest() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lessons = FakeDataUtils.generateLessons();
+                initRecyclerView();
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 1000);
     }
 }
