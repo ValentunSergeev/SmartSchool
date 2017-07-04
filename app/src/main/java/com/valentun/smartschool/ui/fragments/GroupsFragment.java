@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.valentun.smartschool.DTO.NamedEntity;
+import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.NamedEntityAdapter;
 import com.valentun.smartschool.utils.FakeDataUtils;
 
@@ -24,6 +25,8 @@ public class GroupsFragment extends BaseRecyclerFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getActivity().setTitle(getString(R.string.groups_fragment_title));
     }
 
     @Override

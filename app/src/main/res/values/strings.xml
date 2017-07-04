@@ -17,13 +17,12 @@
     <string name="nav_groups">Groups</string>
     <string name="nav_teachers">Teachers</string>
 
-    <!-- TODO delete placeholder strings -->
-    <string name="base_groups_fragment_message">Groups fragment</string>
-    <string name="base_teachers_fragment_message">Teachers fragment</string>
-
     <string name="no_group_selected_label">Select your group first</string>
     <string name="group_autocomplete_hint">Begin entering group name…</string>
     <string name="empty_group_message">Group must be selected</string>
+    <string name="groups_fragment_title">Groups</string>
     <string name="action_change_group">Change group</string>
+
+    <string name="teachers_fragment_title">Teachers</string>
 
 </resources>

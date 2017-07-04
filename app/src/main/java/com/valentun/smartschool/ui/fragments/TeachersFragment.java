@@ -3,9 +3,11 @@ package com.valentun.smartschool.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.valentun.smartschool.DTO.NamedEntity;
+import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.NamedEntityAdapter;
 import com.valentun.smartschool.utils.FakeDataUtils;
 
@@ -18,6 +20,13 @@ public class TeachersFragment extends BaseRecyclerFragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getActivity().setTitle(getString(R.string.teachers_fragment_title));
     }
 
     @Override

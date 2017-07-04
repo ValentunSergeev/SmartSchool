@@ -24,6 +24,7 @@ import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
 import com.valentun.smartschool.adapters.MyScheduleSlideAdapter;
 import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
 import com.valentun.smartschool.utils.DateUtils;
+import com.valentun.smartschool.utils.FakeDataUtils;
 import com.valentun.smartschool.utils.PreferenceUtils;
 import com.valentun.smartschool.utils.UIUtils;
 
@@ -57,6 +58,16 @@ public class MyScheduleFragment extends Fragment {
         setHasOptionsMenu(true);
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
 
+        setTitle();
+    }
+
+    private void setTitle() {
+        long selectedGroupId = PreferenceUtils.getSelectedGroup(context);
+
+        // TODO replace with db query
+        NamedEntity selectedGroup = FakeDataUtils.findGroupById(selectedGroupId);
+
+        if (selectedGroup != null) getActivity().setTitle(selectedGroup.getName());
     }
 
     @Override
@@ -95,7 +106,7 @@ public class MyScheduleFragment extends Fragment {
 
         if(PreferenceUtils.isGroupSelected(context)) {
             DayScheduleFragment.setGroupId(PreferenceUtils.getSelectedGroup(context));
-            showViewPager();
+            initialize();
         } else {
             showGroupSelectionView();
         }
@@ -111,7 +122,7 @@ public class MyScheduleFragment extends Fragment {
             UIUtils.hideKeyboard(getActivity());
             PreferenceUtils.setSelectedGroup(context, group.getId());
             DayScheduleFragment.setGroupId(PreferenceUtils.getSelectedGroup(context));
-            showViewPager();
+            initialize();
         }
     }
 
@@ -124,7 +135,9 @@ public class MyScheduleFragment extends Fragment {
         selectGroupContainer.setVisibility(View.VISIBLE);
     }
 
-    private void showViewPager() {
+    private void initialize() {
+        setTitle();
+
         tabLayout.setVisibility(View.VISIBLE);
         pager.setVisibility(View.VISIBLE);
         selectGroupContainer.setVisibility(View.GONE);

@@ -64,6 +64,14 @@ public class FakeDataUtils {
         return searchResult;
     }
 
+    public static NamedEntity findGroupById(long id) {
+        for (NamedEntity group: allGroups) {
+            if (group.getId() == id) return group;
+        }
+
+        return null;
+    }
+
     public static ArrayList<Lesson> generateLessons() {
         Random random = new Random();
         int count = random.nextInt(3) + 5;
