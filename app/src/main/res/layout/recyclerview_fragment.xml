@@ -5,15 +5,15 @@
     tools:context="com.valentun.smartschool.ui.fragments.DayScheduleFragment">
 
     <ProgressBar
-        android:id="@+id/day_progress"
+        android:id="@+id/recycler_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/day_list"
+        android:id="@+id/recycler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </FrameLayout>

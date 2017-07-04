@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
  */
 
 public class BaseRecyclerFragment extends Fragment {
-    @BindView(R.id.day_progress) ProgressBar progressBar;
-    @BindView(R.id.day_list) RecyclerView recyclerView;
+    @BindView(R.id.recycler_progress) ProgressBar progressBar;
+    @BindView(R.id.recycler_list) RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
