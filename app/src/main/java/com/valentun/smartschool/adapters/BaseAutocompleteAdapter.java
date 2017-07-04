@@ -15,11 +15,11 @@ import java.util.List;
  * Created by Valentun on 26.06.2017.
  */
 
-abstract class BaseAutocompleteAdapter<E> extends BaseAdapter implements Filterable {
+abstract class BaseAutocompleteAdapter<T> extends BaseAdapter implements Filterable {
     static final int MAX_RESULTS = 10;
 
     final Context mContext;
-    private List<E> mResults;
+    private List<T> mResults;
 
     BaseAutocompleteAdapter(Context mContext) {
         this.mContext = mContext;
@@ -29,7 +29,7 @@ abstract class BaseAutocompleteAdapter<E> extends BaseAdapter implements Filtera
     @Override
     public abstract View getView(int i, View view, ViewGroup viewGroup);
 
-    protected abstract List<E> findResults(String searchString);
+    protected abstract List<T> findResults(String searchString);
 
     @Override
     public int getCount() {
@@ -37,7 +37,7 @@ abstract class BaseAutocompleteAdapter<E> extends BaseAdapter implements Filtera
     }
 
     @Override
-    public E getItem(int i) {
+    public T getItem(int i) {
         return mResults.get(i);
     }
 
@@ -53,7 +53,7 @@ abstract class BaseAutocompleteAdapter<E> extends BaseAdapter implements Filtera
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
-                    List<E> results = findResults(constraint.toString());
+                    List<T> results = findResults(constraint.toString());
                     filterResults.values = results;
                     filterResults.count = results.size();
                 }
@@ -63,7 +63,7 @@ abstract class BaseAutocompleteAdapter<E> extends BaseAdapter implements Filtera
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 if (results != null && results.count > 0) {
-                    mResults = (List<E>) results.values;
+                    mResults = (List<T>) results.values;
                     notifyDataSetChanged();
                 } else {
                     notifyDataSetInvalidated();

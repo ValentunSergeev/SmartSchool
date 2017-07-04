@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
-import com.valentun.smartschool.DTO.Group;
+import com.valentun.smartschool.DTO.NamedEntity;
 import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
 import com.valentun.smartschool.adapters.MyScheduleSlideAdapter;
@@ -40,7 +40,7 @@ public class MyScheduleFragment extends Fragment {
     @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
 
     private TabLayout tabLayout;
-    private Group group;
+    private NamedEntity group;
     private Context context;
 
     public static MyScheduleFragment newInstance() {
@@ -56,6 +56,7 @@ public class MyScheduleFragment extends Fragment {
         context = getActivity();
         setHasOptionsMenu(true);
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
+
     }
 
     @Override
@@ -144,9 +145,9 @@ public class MyScheduleFragment extends Fragment {
         groupChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Group selectedGroup = (Group) adapterView.getItemAtPosition(position);
-                groupChooser.setText(selectedGroup.getName());
-                group = selectedGroup;
+                NamedEntity selectedNamedEntity = (NamedEntity) adapterView.getItemAtPosition(position);
+                groupChooser.setText(selectedNamedEntity.getName());
+                group = selectedNamedEntity;
             }
         });
     }

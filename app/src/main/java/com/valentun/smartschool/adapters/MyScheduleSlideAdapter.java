@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.valentun.smartschool.ui.fragments.DayScheduleFragment;
 import com.valentun.smartschool.utils.DateUtils;
 
-import java.util.Calendar;
-
 /**
  * Created by Valentun on 25.06.2017.
  */
@@ -16,7 +14,6 @@ import java.util.Calendar;
 @SuppressWarnings("WrongConstant")
 public class MyScheduleSlideAdapter extends FragmentStatePagerAdapter {
     private static final int NUM_PAGES = 7;
-    private final Calendar calendar = Calendar.getInstance();
 
     public MyScheduleSlideAdapter(FragmentManager fm) {
         super(fm);

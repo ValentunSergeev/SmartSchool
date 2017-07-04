@@ -9,11 +9,6 @@ import android.view.ViewGroup;
 
 import com.valentun.smartschool.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GroupsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GroupsFragment extends Fragment {
 
     public static GroupsFragment newInstance() {

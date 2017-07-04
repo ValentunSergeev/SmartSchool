@@ -1,6 +1,6 @@
 package com.valentun.smartschool.utils;
 
-import com.valentun.smartschool.DTO.Group;
+import com.valentun.smartschool.DTO.NamedEntity;
 import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.DTO.School;
 
@@ -14,19 +14,21 @@ import java.util.Random;
 public class FakeDataUtils {
     private static final int SCHOOLS_COUNT = 100;
     private static final int SCHOOLS_IN_CITY = 10;
-    private static final int GROUPS_COUNT = 11;
 
+    private static final int GROUPS_COUNT = 11;
     private static final String[] GROUP_POSTFIXES = {"A", "B", "C"};
 
+    private static final int TEACHERS_COUNT = 30;
+
     private static final ArrayList<School> allSchools = buildAllSchools();
-    public static final ArrayList<Group> allGroups = buildGroups();
+    public static final ArrayList<NamedEntity> allGroups = buildGroups();
 
 
-    private static ArrayList<Group> buildGroups() {
-        ArrayList<Group> result = new ArrayList<>();
+    private static ArrayList<NamedEntity> buildGroups() {
+        ArrayList<NamedEntity> result = new ArrayList<>();
         for (int i = 0; i < GROUPS_COUNT ; i++) {
             for (int j = 0; j < GROUP_POSTFIXES.length; j++) {
-                result.add(new Group(i*10 + j, (i + 1) + GROUP_POSTFIXES[j]));
+                result.add(new NamedEntity(i*10 + j, (i + 1) + GROUP_POSTFIXES[j]));
             }
         }
         return result;
@@ -51,9 +53,9 @@ public class FakeDataUtils {
         return searchResult;
     }
 
-    public static ArrayList<Group> findGroups(String groupName, int maxResults) {
-        ArrayList<Group> searchResult = new ArrayList<>();
-        for (Group group: allGroups) {
+    public static ArrayList<NamedEntity> findGroups(String groupName, int maxResults) {
+        ArrayList<NamedEntity> searchResult = new ArrayList<>();
+        for (NamedEntity group : allGroups) {
             if (group.getName().contains(groupName)) {
                 searchResult.add(group);
                 if (searchResult.size() == maxResults) break;
@@ -70,6 +72,16 @@ public class FakeDataUtils {
             Lesson lesson = new Lesson();
             result.add(lesson);
         }
+        return result;
+    }
+
+    public static ArrayList<NamedEntity> generateTeachers() {
+        ArrayList<NamedEntity> result = new ArrayList<>();
+
+        for (int i = 0; i < TEACHERS_COUNT; i++) {
+            result.add(new NamedEntity(i, "Teacher " + (i+ 1)));
+        }
+
         return result;
     }
 }

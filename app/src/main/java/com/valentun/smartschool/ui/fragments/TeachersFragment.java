@@ -2,16 +2,18 @@ package com.valentun.smartschool.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.valentun.smartschool.R;
+import com.valentun.smartschool.DTO.NamedEntity;
+import com.valentun.smartschool.adapters.NamedEntityAdapter;
+import com.valentun.smartschool.utils.FakeDataUtils;
 
-public class TeachersFragment extends Fragment {
+import java.util.ArrayList;
 
-    public static TeachersFragment newInstance(String param1, String param2) {
+public class TeachersFragment extends BaseRecyclerFragment {
+
+    public static TeachersFragment newInstance() {
         TeachersFragment fragment = new TeachersFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -19,14 +21,21 @@ public class TeachersFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        makeRequest();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_teachers, container, false);
+    // TODO Replace with db request
+    private void makeRequest() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<NamedEntity> teachers = FakeDataUtils.generateTeachers();
+                initRecyclerView(new NamedEntityAdapter(teachers));
+                showRecyclerView();
+            }
+        }, 1000);
     }
-
 }
