@@ -1,13 +1,13 @@
 package com.valentun.smartschool.DTO;
 
-public class NamedEntity {
+public class Group {
     private long id;
     private String name;
 
-    public NamedEntity() {
+    public Group() {
     }
 
-    public NamedEntity(long id, String name) {
+    public Group(long id, String name) {
         this.id = id;
         this.name = name;
     }

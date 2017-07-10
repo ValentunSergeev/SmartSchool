@@ -16,10 +16,17 @@ import java.util.ArrayList;
  */
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
-    private ArrayList<Lesson> lessons;
+    // Will be used later to identify which text will be placed to teacherGroupView
+    public enum Type {
+        GROUP, TEACHER
+    }
 
-    public DayAdapter(ArrayList<Lesson> lessons) {
+    private ArrayList<Lesson> lessons;
+    private Type type;
+
+    public DayAdapter(ArrayList<Lesson> lessons, Type type) {
         this.lessons = lessons;
+        this.type = type;
     }
 
     @Override
@@ -41,7 +48,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     class DayViewHolder extends RecyclerView.ViewHolder {
         private TextView numberView, nameView, startTimeView,
-                endTimeView, teacherView, roomView;
+                endTimeView, teacherGroupView, roomView;
 
         DayViewHolder(View itemView) {
             super(itemView);
@@ -50,12 +57,17 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
             nameView = (TextView) itemView.findViewById(R.id.lesson_name);
             startTimeView = (TextView) itemView.findViewById(R.id.lesson_start_time);
             endTimeView = (TextView) itemView.findViewById(R.id.lesson_end_time);
-            teacherView = (TextView) itemView.findViewById(R.id.lesson_teacher);
+            teacherGroupView = (TextView) itemView.findViewById(R.id.lesson_teacher_group);
             roomView = (TextView) itemView.findViewById(R.id.lesson_room_number);
         }
 
         void bind(int position) {
-            // TODO set strings from bd
+            // TODO set strings from bd instead
+            if (type == Type.GROUP) {
+                teacherGroupView.setText("Kozlova T.A.");
+            } else {
+                teacherGroupView.setText("312");
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 package com.valentun.smartschool.utils;
 
-import com.valentun.smartschool.DTO.NamedEntity;
+import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.DTO.School;
+import com.valentun.smartschool.DTO.Teacher;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,21 +21,22 @@ public class FakeDataUtils {
 
     private static final int TEACHERS_COUNT = 30;
 
-    private static final ArrayList<School> allSchools = buildAllSchools();
-    public static final ArrayList<NamedEntity> allGroups = buildGroups();
+    private static final ArrayList<School> allSchools = generateSchools();
+    public static final ArrayList<Group> allGroups = generateGroups();
+    public static final ArrayList<Teacher> allTeachers  = generateTeachers();
 
 
-    private static ArrayList<NamedEntity> buildGroups() {
-        ArrayList<NamedEntity> result = new ArrayList<>();
+    private static ArrayList<Group> generateGroups() {
+        ArrayList<Group> result = new ArrayList<>();
         for (int i = 0; i < GROUPS_COUNT ; i++) {
             for (int j = 0; j < GROUP_POSTFIXES.length; j++) {
-                result.add(new NamedEntity(i*10 + j, (i + 1) + GROUP_POSTFIXES[j]));
+                result.add(new Group(i*10 + j, (i + 1) + GROUP_POSTFIXES[j]));
             }
         }
         return result;
     }
 
-    private static ArrayList<School> buildAllSchools() {
+    private static ArrayList<School> generateSchools() {
         ArrayList<School> result = new ArrayList<>();
         for (int i = 0; i < SCHOOLS_COUNT; i++) {
             result.add(new School(i, "City " + ((i + 1) / SCHOOLS_IN_CITY), "School " + (i % SCHOOLS_IN_CITY)));
@@ -53,9 +55,9 @@ public class FakeDataUtils {
         return searchResult;
     }
 
-    public static ArrayList<NamedEntity> findGroups(String groupName, int maxResults) {
-        ArrayList<NamedEntity> searchResult = new ArrayList<>();
-        for (NamedEntity group : allGroups) {
+    public static ArrayList<Group> findGroups(String groupName, int maxResults) {
+        ArrayList<Group> searchResult = new ArrayList<>();
+        for (Group group : allGroups) {
             if (group.getName().contains(groupName)) {
                 searchResult.add(group);
                 if (searchResult.size() == maxResults) break;
@@ -64,9 +66,17 @@ public class FakeDataUtils {
         return searchResult;
     }
 
-    public static NamedEntity findGroupById(long id) {
-        for (NamedEntity group: allGroups) {
+    public static Group findGroupById(long id) {
+        for (Group group: allGroups) {
             if (group.getId() == id) return group;
+        }
+
+        return null;
+    }
+
+    public static Teacher findTeacherById(long id) {
+        for (Teacher teacher: allTeachers) {
+            if (teacher.getId() == id) return teacher;
         }
 
         return null;
@@ -83,11 +93,11 @@ public class FakeDataUtils {
         return result;
     }
 
-    public static ArrayList<NamedEntity> generateTeachers() {
-        ArrayList<NamedEntity> result = new ArrayList<>();
+    public static ArrayList<Teacher> generateTeachers() {
+        ArrayList<Teacher> result = new ArrayList<>();
 
         for (int i = 0; i < TEACHERS_COUNT; i++) {
-            result.add(new NamedEntity(i, "Teacher " + (i+ 1)));
+            result.add(new Teacher(i, "Teacher " + (i+ 1)));
         }
 
         return result;

@@ -3,6 +3,8 @@ package com.valentun.smartschool.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import static com.valentun.smartschool.Constants.DEFAULT_ID_VALUE;
+
 /**
  * Created by Valentun on 22.06.2017.
  */
@@ -11,8 +13,6 @@ public class PreferenceUtils {
     private static final String PREFERENCE_SCHOOL_ID_KEY = "selectedSchoolId";
     private static final String PREFERENCE_GROUP_ID_KEY = "selectedGroupId";
     private static final String PREFERENCE_KEY = "smartSchool";
-
-    public static final long DEFAULT_ID_VALUE = -1;
 
     private PreferenceUtils() {
     }

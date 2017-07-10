@@ -1,36 +1,37 @@
 package com.valentun.smartschool.ui.fragments;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.adapters.DayAdapter;
+import com.valentun.smartschool.adapters.DayAdapter.Type;
 import com.valentun.smartschool.utils.FakeDataUtils;
-import com.valentun.smartschool.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 
-public class DayScheduleFragment extends BaseRecyclerFragment {
+/**
+ * Created by Valentun on 10.07.2017.
+ */
 
-    public static final String DAY_OF_WEEK_KEY = "weekDay";
+public class TeacherDayFragment extends BaseRecyclerFragment{
+    private static final String DAY_OF_WEEK_KEY = "weekDay";
+    private static final String TEACHER_ID_KEY = "teacherId";
 
-    private static long groupId = PreferenceUtils.DEFAULT_ID_VALUE;
+    private long groupId;
     private int weekDay;
+
     private ArrayList<Lesson> lessons;
 
-    public static DayScheduleFragment newInstance(int dayOfWeek) {
-        DayScheduleFragment fragment = new DayScheduleFragment();
+    public static TeacherDayFragment newInstance(long groupId, int dayOfWeek) {
+        TeacherDayFragment fragment = new TeacherDayFragment();
 
         Bundle args = new Bundle();
         args.putInt(DAY_OF_WEEK_KEY, dayOfWeek);
+        args.putLong(TEACHER_ID_KEY, groupId);
 
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public static void setGroupId(long groupId) {
-        DayScheduleFragment.groupId = groupId;
     }
 
     @Override
@@ -38,6 +39,7 @@ public class DayScheduleFragment extends BaseRecyclerFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             weekDay = getArguments().getInt(DAY_OF_WEEK_KEY);
+            groupId = getArguments().getLong(TEACHER_ID_KEY);
         }
     }
 
@@ -55,7 +57,7 @@ public class DayScheduleFragment extends BaseRecyclerFragment {
             @Override
             public void run() {
                 lessons = FakeDataUtils.generateLessons();
-                initRecyclerView(new DayAdapter(lessons));
+                initRecyclerView(new DayAdapter(lessons, Type.TEACHER));
                 showRecyclerView();
             }
         }, 1000);

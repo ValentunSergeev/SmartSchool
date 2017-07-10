@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by Valentun on 04.07.2017.
  */
 
-public class BaseRecyclerFragment extends Fragment {
+public abstract class BaseRecyclerFragment extends Fragment {
     @BindView(R.id.recycler_progress) ProgressBar progressBar;
     @BindView(R.id.recycler_list) RecyclerView recyclerView;
 

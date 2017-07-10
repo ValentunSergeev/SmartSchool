@@ -8,7 +8,8 @@ public class Lesson {
     private int periodId;
     private int teacherId;
     private int classroomId;
-    private int objectId;
+    private int subjectId;
+    private int groupId;
 
     public Lesson() {
     }
@@ -37,11 +38,19 @@ public class Lesson {
         this.classroomId = classroomId;
     }
 
-    public int getObjectId() {
-        return objectId;
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setObjectId(int objectId) {
-        this.objectId = objectId;
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }

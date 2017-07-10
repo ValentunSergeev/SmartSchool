@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
-import com.valentun.smartschool.DTO.NamedEntity;
+import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
-import com.valentun.smartschool.adapters.MyScheduleSlideAdapter;
+import com.valentun.smartschool.adapters.GroupSlideAdapter;
 import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
 import com.valentun.smartschool.utils.DateUtils;
 import com.valentun.smartschool.utils.FakeDataUtils;
@@ -41,14 +41,11 @@ public class MyScheduleFragment extends Fragment {
     @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
 
     private TabLayout tabLayout;
-    private NamedEntity group;
+    private Group group;
     private Context context;
 
     public static MyScheduleFragment newInstance() {
-        MyScheduleFragment fragment = new MyScheduleFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new MyScheduleFragment();
     }
 
     @Override
@@ -57,22 +54,20 @@ public class MyScheduleFragment extends Fragment {
         context = getActivity();
         setHasOptionsMenu(true);
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
-
-        setTitle();
     }
 
     private void setTitle() {
         long selectedGroupId = PreferenceUtils.getSelectedGroup(context);
 
         // TODO replace with db query
-        NamedEntity selectedGroup = FakeDataUtils.findGroupById(selectedGroupId);
+        Group selectedGroup = FakeDataUtils.findGroupById(selectedGroupId);
 
         if (selectedGroup != null) getActivity().setTitle(selectedGroup.getName());
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         tabLayout.setVisibility(View.GONE);
     }
 
@@ -105,7 +100,6 @@ public class MyScheduleFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if(PreferenceUtils.isGroupSelected(context)) {
-            DayScheduleFragment.setGroupId(PreferenceUtils.getSelectedGroup(context));
             initialize();
         } else {
             showGroupSelectionView();
@@ -121,7 +115,6 @@ public class MyScheduleFragment extends Fragment {
         } else {
             UIUtils.hideKeyboard(getActivity());
             PreferenceUtils.setSelectedGroup(context, group.getId());
-            DayScheduleFragment.setGroupId(PreferenceUtils.getSelectedGroup(context));
             initialize();
         }
     }
@@ -142,7 +135,8 @@ public class MyScheduleFragment extends Fragment {
         pager.setVisibility(View.VISIBLE);
         selectGroupContainer.setVisibility(View.GONE);
 
-        MyScheduleSlideAdapter adapter = new MyScheduleSlideAdapter(getChildFragmentManager());
+        long id = PreferenceUtils.getSelectedGroup(context);
+        GroupSlideAdapter adapter = new GroupSlideAdapter(getChildFragmentManager(), id);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(7);
         tabLayout.setupWithViewPager(pager);
@@ -158,7 +152,7 @@ public class MyScheduleFragment extends Fragment {
         groupChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                NamedEntity selectedNamedEntity = (NamedEntity) adapterView.getItemAtPosition(position);
+                Group selectedNamedEntity = (Group) adapterView.getItemAtPosition(position);
                 groupChooser.setText(selectedNamedEntity.getName());
                 group = selectedNamedEntity;
             }

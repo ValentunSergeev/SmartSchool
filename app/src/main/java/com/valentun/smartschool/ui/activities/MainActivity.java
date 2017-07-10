@@ -7,15 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.valentun.smartschool.R;
-import com.valentun.smartschool.ui.fragments.GroupsFragment;
+import com.valentun.smartschool.ui.fragments.GroupsListFragment;
 import com.valentun.smartschool.ui.fragments.MyScheduleFragment;
-import com.valentun.smartschool.ui.fragments.TeachersFragment;
+import com.valentun.smartschool.ui.fragments.TeachersListFragment;
 import com.valentun.smartschool.utils.PreferenceUtils;
 
 import butterknife.BindView;
@@ -24,11 +26,12 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager fragmentManager;
-
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
+
+    private FragmentManager fragmentManager;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Class<? extends Fragment> fragmentClass = null;
@@ -84,10 +87,10 @@ public class MainActivity extends BaseActivity
                 fragmentClass = MyScheduleFragment.class;
                 break;
             case R.id.nav_groups:
-                fragmentClass = GroupsFragment.class;
+                fragmentClass = GroupsListFragment.class;
                 break;
             case R.id.nav_teachers:
-                fragmentClass = TeachersFragment.class;
+                fragmentClass = TeachersListFragment.class;
                 break;
             case R.id.nav_change_school:
                 PreferenceUtils.deleteSelectedSchool(this);
@@ -106,10 +109,33 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    public void setDefaultHomeState() {
+        toggle.setDrawerIndicatorEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+    public void enableUpArrow() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentManager.popBackStack();
+            }
+        });
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        toggle.setDrawerIndicatorEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     private void initializeNavDrawer() {
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         drawer.setFitsSystemWindows(true);

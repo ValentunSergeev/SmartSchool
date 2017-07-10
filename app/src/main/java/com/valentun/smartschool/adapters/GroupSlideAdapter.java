@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.valentun.smartschool.ui.fragments.DayScheduleFragment;
+import com.valentun.smartschool.ui.fragments.GroupDayFragment;
 import com.valentun.smartschool.utils.DateUtils;
 
 /**
@@ -12,16 +12,18 @@ import com.valentun.smartschool.utils.DateUtils;
  */
 
 @SuppressWarnings("WrongConstant")
-public class MyScheduleSlideAdapter extends FragmentStatePagerAdapter {
+public class GroupSlideAdapter extends FragmentStatePagerAdapter {
     private static final int NUM_PAGES = 7;
+    private long groupId;
 
-    public MyScheduleSlideAdapter(FragmentManager fm) {
+    public GroupSlideAdapter(FragmentManager fm, long groupId) {
         super(fm);
+        this.groupId = groupId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return DayScheduleFragment.newInstance(position);
+        return GroupDayFragment.newInstance(groupId, position);
     }
 
     @Override
