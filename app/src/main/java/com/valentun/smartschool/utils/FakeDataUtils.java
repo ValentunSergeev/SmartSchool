@@ -1,5 +1,6 @@
 package com.valentun.smartschool.utils;
 
+import com.valentun.smartschool.Constants;
 import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.DTO.Lesson;
 import com.valentun.smartschool.DTO.School;
@@ -67,6 +68,7 @@ public class FakeDataUtils {
     }
 
     public static Group findGroupById(long id) {
+        if (id == Constants.DEFAULT_ID_VALUE) return null;
         for (Group group: allGroups) {
             if (group.getId() == id) return group;
         }

@@ -4,26 +4,27 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.valentun.smartschool.ui.fragments.GroupDayFragment;
+import com.valentun.smartschool.ui.fragments.DayFragment;
 import com.valentun.smartschool.utils.DateUtils;
 
 /**
- * Created by Valentun on 25.06.2017.
+ * Created by Valentun on 10.07.2017.
  */
 
-@SuppressWarnings("WrongConstant")
-public class GroupSlideAdapter extends FragmentStatePagerAdapter {
+public class SlideAdapter extends FragmentStatePagerAdapter {
     private static final int NUM_PAGES = 7;
     private long groupId;
+    private int type;
 
-    public GroupSlideAdapter(FragmentManager fm, long groupId) {
+    public SlideAdapter(FragmentManager fm, long teacherId, int type) {
         super(fm);
-        this.groupId = groupId;
+        this.groupId = teacherId;
+        this.type = type;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return GroupDayFragment.newInstance(groupId, position);
+        return DayFragment.newInstance(groupId, position, type);
     }
 
     @Override

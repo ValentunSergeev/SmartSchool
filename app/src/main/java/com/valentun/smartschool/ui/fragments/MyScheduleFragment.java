@@ -1,14 +1,10 @@
 package com.valentun.smartschool.ui.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +17,7 @@ import android.widget.ProgressBar;
 import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
-import com.valentun.smartschool.adapters.GroupSlideAdapter;
 import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
-import com.valentun.smartschool.utils.DateUtils;
 import com.valentun.smartschool.utils.FakeDataUtils;
 import com.valentun.smartschool.utils.PreferenceUtils;
 import com.valentun.smartschool.utils.UIUtils;
@@ -32,17 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyScheduleFragment extends Fragment {
+public class MyScheduleFragment extends GroupDetailFragment {
 
-    @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.select_group_container) ConstraintLayout selectGroupContainer;
 
     @BindView(R.id.autocomplete_chooser_view) DelayAutoCompleteTextView groupChooser;
     @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
-
-    private TabLayout tabLayout;
-    private Group group;
-    private Context context;
 
     public static MyScheduleFragment newInstance() {
         return new MyScheduleFragment();
@@ -51,24 +40,14 @@ public class MyScheduleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity();
+
         setHasOptionsMenu(true);
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
-    }
-
-    private void setTitle() {
-        long selectedGroupId = PreferenceUtils.getSelectedGroup(context);
-
-        // TODO replace with db query
-        Group selectedGroup = FakeDataUtils.findGroupById(selectedGroupId);
-
-        if (selectedGroup != null) getActivity().setTitle(selectedGroup.getName());
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        tabLayout.setVisibility(View.GONE);
+    public void onStart() {
+        super.onStart();
+        activity.setDefaultHomeState();
     }
 
     @Override
@@ -80,7 +59,7 @@ public class MyScheduleFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_change_group) {
-            PreferenceUtils.deleteSelectedGroup(context);
+            PreferenceUtils.deleteSelectedGroup(activity);
             showGroupSelectionView();
             return true;
         }
@@ -99,62 +78,61 @@ public class MyScheduleFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        if(PreferenceUtils.isGroupSelected(context)) {
+        if(object != null) {
             initialize();
         } else {
             showGroupSelectionView();
         }
     }
 
+    @Override
+    protected void setObjectFromExtras() {
+        long selectedGroupId = PreferenceUtils.getSelectedGroup(activity);
+        object = FakeDataUtils.findGroupById(selectedGroupId);
+    }
+
     @OnClick(R.id.select_group_button)
     public void onSelectGroupButtonClicked(View view) {
-        if (group == null) {
+        if (object == null) {
             Snackbar.make(selectGroupContainer,
                     getString(R.string.empty_group_message), Snackbar.LENGTH_LONG)
                     .show();
         } else {
             UIUtils.hideKeyboard(getActivity());
-            PreferenceUtils.setSelectedGroup(context, group.getId());
+            PreferenceUtils.setSelectedGroup(activity, object.getId());
             initialize();
         }
     }
 
     private void showGroupSelectionView() {
         initializeAutoCompleteView();
-        group = null;
+        object = null;
 
         tabLayout.setVisibility(View.GONE);
         pager.setVisibility(View.GONE);
         selectGroupContainer.setVisibility(View.VISIBLE);
     }
 
-    private void initialize() {
-        setTitle();
 
+    protected void initialize() {
         tabLayout.setVisibility(View.VISIBLE);
         pager.setVisibility(View.VISIBLE);
         selectGroupContainer.setVisibility(View.GONE);
 
-        long id = PreferenceUtils.getSelectedGroup(context);
-        GroupSlideAdapter adapter = new GroupSlideAdapter(getChildFragmentManager(), id);
-        pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(7);
-        tabLayout.setupWithViewPager(pager);
-
-        pager.setCurrentItem(DateUtils.ViewPagerUtils.getCurrentDayPosition());
+        super.initialize();
     }
 
     private void initializeAutoCompleteView() {
         groupChooser.getText().clear();
         groupChooser.setThreshold(1);
-        groupChooser.setAdapter(new GroupAutocompleteAdapter(context));
+        groupChooser.setAdapter(new GroupAutocompleteAdapter(activity));
         groupChooser.setLoadingIndicator(progressBar);
         groupChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Group selectedNamedEntity = (Group) adapterView.getItemAtPosition(position);
-                groupChooser.setText(selectedNamedEntity.getName());
-                group = selectedNamedEntity;
+                Group group = (Group) adapterView.getItemAtPosition(position);
+                groupChooser.setText(group.getName());
+                object = group;
             }
         });
     }

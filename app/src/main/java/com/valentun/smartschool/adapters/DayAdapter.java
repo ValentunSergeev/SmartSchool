@@ -11,20 +11,18 @@ import com.valentun.smartschool.R;
 
 import java.util.ArrayList;
 
+import static com.valentun.smartschool.Constants.GROUP_TYPE;
+
 /**
  * Created by Valentun on 02.07.2017.
  */
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
-    // Will be used later to identify which text will be placed to teacherGroupView
-    public enum Type {
-        GROUP, TEACHER
-    }
 
     private ArrayList<Lesson> lessons;
-    private Type type;
+    private int type;
 
-    public DayAdapter(ArrayList<Lesson> lessons, Type type) {
+    public DayAdapter(ArrayList<Lesson> lessons, int type) {
         this.lessons = lessons;
         this.type = type;
     }
@@ -63,7 +61,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
         void bind(int position) {
             // TODO set strings from bd instead
-            if (type == Type.GROUP) {
+            if (type == GROUP_TYPE) {
                 teacherGroupView.setText("Kozlova T.A.");
             } else {
                 teacherGroupView.setText("312");
