@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
+import com.valentun.smartschool.Constants;
 import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.R;
 import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
@@ -28,10 +29,13 @@ import butterknife.OnClick;
 
 public class MyScheduleFragment extends GroupDetailFragment {
 
-    @BindView(R.id.select_group_container) ConstraintLayout selectGroupContainer;
+    @BindView(R.id.select_group_container)
+    ConstraintLayout selectGroupContainer;
 
-    @BindView(R.id.autocomplete_chooser_view) DelayAutoCompleteTextView groupChooser;
-    @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
+    @BindView(R.id.autocomplete_chooser_view)
+    DelayAutoCompleteTextView groupChooser;
+    @BindView(R.id.autocomplete_progress_bar)
+    ProgressBar progressBar;
 
     public static MyScheduleFragment newInstance() {
         return new MyScheduleFragment();
@@ -78,7 +82,7 @@ public class MyScheduleFragment extends GroupDetailFragment {
 
         ButterKnife.bind(this, view);
 
-        if(object != null) {
+        if (object != null) {
             initialize();
         } else {
             showGroupSelectionView();
@@ -93,14 +97,20 @@ public class MyScheduleFragment extends GroupDetailFragment {
 
     @OnClick(R.id.select_group_button)
     public void onSelectGroupButtonClicked(View view) {
-        if (object == null) {
-            Snackbar.make(selectGroupContainer,
-                    getString(R.string.empty_group_message), Snackbar.LENGTH_LONG)
-                    .show();
-        } else {
-            UIUtils.hideKeyboard(getActivity());
+        UIUtils.hideKeyboard(getActivity());
+        if (object != null) {
             PreferenceUtils.setSelectedGroup(activity, object.getId());
             initialize();
+        } else {
+            String text = groupChooser.getText().toString().toLowerCase();
+            String message = null;
+
+            if (text.contains(Constants.EASTER1_TRIGGER)) message = getString(R.string.easter_string_1);
+            if (text.contains(Constants.EASTER_2_TRIGGER)) message = getString(R.string.easter_string_2);
+
+            if (message == null) message = getString(R.string.empty_group_message);
+
+            Snackbar.make(selectGroupContainer, message, Snackbar.LENGTH_LONG).show();
         }
     }
 

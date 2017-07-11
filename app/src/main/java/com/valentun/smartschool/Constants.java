@@ -9,4 +9,7 @@ public class Constants {
 
     public static final int GROUP_TYPE = 1;
     public static final int TEACHER_TYPE = 2;
+
+    public static final String EASTER1_TRIGGER = "лига";
+    public static final String EASTER_2_TRIGGER = "едпмм";
 }

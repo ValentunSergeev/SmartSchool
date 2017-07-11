@@ -25,7 +25,7 @@ public class GroupDetailFragment extends BaseWeekFragment<Group> {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
-        initialize();
+        if(object != null) initialize();
     }
 
     @Override

@@ -25,4 +25,7 @@
 
     <string name="teachers_fragment_title">Teachers</string>
 
+    <string name="easter_string_1" translatable="false">Лиговец? Тебе здесь не рады.</string>
+    <string name="easter_string_2" translatable="false">ЕДПММ forever</string>
+
 </resources>
