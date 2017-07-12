@@ -11,10 +11,6 @@ import butterknife.ButterKnife;
 
 import static com.valentun.smartschool.Constants.TEACHER_TYPE;
 
-/**
- * Created by Valentun on 10.07.2017.
- */
-
 public class TeacherDetailFragment extends BaseWeekFragment<Teacher> {
 
 

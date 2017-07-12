@@ -11,10 +11,6 @@ import com.valentun.smartschool.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 04.07.2017.
- */
-
 public abstract class NamedEntityAdapter<T> extends RecyclerView.Adapter<NamedEntityAdapter.EntityViewHolder> {
     protected ArrayList<T> data;
     protected FragmentManager fragmentManager;

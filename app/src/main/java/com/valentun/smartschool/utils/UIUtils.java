@@ -5,10 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-/**
- * Created by Valentun on 26.06.2017.
- */
-
 public class UIUtils {
     public static void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();

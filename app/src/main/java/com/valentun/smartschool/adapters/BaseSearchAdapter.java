@@ -6,10 +6,6 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 12.07.2017.
- */
-
 public abstract class BaseSearchAdapter<T, E extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<E>
         implements Filterable {
     protected ArrayList<T> data;

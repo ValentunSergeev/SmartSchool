@@ -1,9 +1,5 @@
 package com.valentun.smartschool.DTO;
 
-/**
- * Created by Valentun on 02.07.2017.
- */
-
 public class Lesson {
     private int periodId;
     private int teacherId;

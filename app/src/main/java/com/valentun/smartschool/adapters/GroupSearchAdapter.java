@@ -12,10 +12,6 @@ import com.valentun.smartschool.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 26.06.2017.
- */
-
 public class GroupSearchAdapter extends BaseSearchAdapter<Group, GroupSearchAdapter.SearchGroupHolder>
         implements Filterable {
 

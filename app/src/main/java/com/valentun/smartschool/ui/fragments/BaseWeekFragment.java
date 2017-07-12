@@ -17,10 +17,6 @@ import com.valentun.smartschool.utils.DateUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Valentun on 07.07.2017.
- */
-
 public abstract class BaseWeekFragment<T> extends Fragment {
     public static final String EXTRA_ID_KEY = "groupId";
 

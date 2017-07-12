@@ -6,10 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * Created by Valentun on 22.06.2017.
- */
-
 public abstract class BaseActivity extends AppCompatActivity {
     protected boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);

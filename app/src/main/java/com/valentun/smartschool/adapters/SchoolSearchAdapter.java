@@ -15,10 +15,6 @@ import com.valentun.smartschool.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 12.07.2017.
- */
-
 public class SchoolSearchAdapter extends BaseSearchAdapter<School, SchoolSearchAdapter.SearchSchoolHolder> {
 
 

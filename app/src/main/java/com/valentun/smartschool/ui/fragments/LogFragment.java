@@ -8,10 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Valentun on 11.07.2017.
- */
-
 // If you not sure about lifestyles' order, extend debuggable fragment with that
 public class LogFragment extends Fragment {
     protected static final String TAG = "LogFragment";

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 
 import static com.valentun.smartschool.Constants.GROUP_TYPE;
 
-/**
- * Created by Valentun on 02.07.2017.
- */
-
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     private ArrayList<Lesson> lessons;

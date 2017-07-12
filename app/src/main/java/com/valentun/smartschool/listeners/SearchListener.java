@@ -9,10 +9,6 @@ import android.widget.ProgressBar;
 
 import com.valentun.smartschool.Constants;
 
-/**
- * Created by Valentun on 12.07.2017.
- */
-
 public class SearchListener implements SearchView.OnQueryTextListener {
     private Handler handler = new Handler();
     private ProgressBar progressBar;

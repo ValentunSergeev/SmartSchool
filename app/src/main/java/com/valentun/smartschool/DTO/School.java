@@ -1,9 +1,5 @@
 package com.valentun.smartschool.DTO;
 
-/**
- * Created by Valentun on 22.06.2017.
- */
-
 public class School {
     private long id;
     private String city;

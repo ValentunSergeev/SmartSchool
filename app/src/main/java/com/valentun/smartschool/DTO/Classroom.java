@@ -1,8 +1,6 @@
 package com.valentun.smartschool.DTO;
 
-/**
- * Created by Valentun on 08.07.2017.
- */
+
 
 public class Classroom {
     private long id;

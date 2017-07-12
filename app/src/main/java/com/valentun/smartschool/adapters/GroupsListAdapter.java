@@ -9,10 +9,6 @@ import com.valentun.smartschool.ui.fragments.GroupDetailFragment;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 08.07.2017.
- */
-
 public class GroupsListAdapter extends NamedEntityAdapter<Group> {
 
     public GroupsListAdapter(ArrayList<Group> data, FragmentManager fragmentManager) {

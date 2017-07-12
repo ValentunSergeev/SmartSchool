@@ -7,10 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.valentun.smartschool.ui.fragments.DayFragment;
 import com.valentun.smartschool.utils.DateUtils;
 
-/**
- * Created by Valentun on 10.07.2017.
- */
-
 public class SlideAdapter extends FragmentStatePagerAdapter {
     private static final int NUM_PAGES = 7;
     private long groupId;

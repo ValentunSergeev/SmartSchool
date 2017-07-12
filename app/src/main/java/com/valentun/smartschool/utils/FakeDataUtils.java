@@ -8,10 +8,6 @@ import com.valentun.smartschool.DTO.Teacher;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Valentun on 22.06.2017.
- */
-
 public class FakeDataUtils {
     private static final int SCHOOLS_COUNT = 100;
     private static final int SCHOOLS_IN_CITY = 10;

@@ -9,10 +9,6 @@ import com.valentun.smartschool.ui.fragments.TeacherDetailFragment;
 
 import java.util.ArrayList;
 
-/**
- * Created by Valentun on 08.07.2017.
- */
-
 public class TeachersListAdapter extends NamedEntityAdapter<Teacher> {
 
     public TeachersListAdapter(FragmentManager fragmentManager, ArrayList<Teacher> data) {

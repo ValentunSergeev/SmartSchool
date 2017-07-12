@@ -3,10 +3,6 @@ package com.valentun.smartschool.utils;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
-/**
- * Created by Valentun on 25.06.2017.
- */
-
 public class DateUtils {
     private static final int DAYS_IN_WEEK = 7;
 
