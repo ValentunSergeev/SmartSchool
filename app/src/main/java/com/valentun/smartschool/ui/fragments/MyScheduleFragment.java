@@ -2,40 +2,44 @@ package com.valentun.smartschool.ui.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.valentun.smartschool.Constants;
 import com.valentun.smartschool.DTO.Group;
 import com.valentun.smartschool.R;
-import com.valentun.smartschool.adapters.GroupAutocompleteAdapter;
-import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
+import com.valentun.smartschool.adapters.GroupSearchAdapter;
+import com.valentun.smartschool.listeners.SearchListener;
 import com.valentun.smartschool.utils.FakeDataUtils;
 import com.valentun.smartschool.utils.PreferenceUtils;
-import com.valentun.smartschool.utils.UIUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MyScheduleFragment extends GroupDetailFragment {
+import static android.view.View.GONE;
 
-    @BindView(R.id.select_group_container)
-    ConstraintLayout selectGroupContainer;
+public class MyScheduleFragment extends GroupDetailFragment implements GroupSearchAdapter.ItemClickCallback {
 
-    @BindView(R.id.autocomplete_chooser_view)
-    DelayAutoCompleteTextView groupChooser;
-    @BindView(R.id.autocomplete_progress_bar)
-    ProgressBar progressBar;
+    @BindView(R.id.select_group_container) LinearLayout selectGroupContainer;
+    @BindView(R.id.search_group_progress) ProgressBar progressBar;
+    @BindView(R.id.search_group_list) RecyclerView recyclerView;
+
+    private MenuItem changeGroupItem, searchGroupItem;
+    private SearchView searchView;
+    private GroupSearchAdapter adapter;
 
     public static MyScheduleFragment newInstance() {
         return new MyScheduleFragment();
@@ -52,11 +56,20 @@ public class MyScheduleFragment extends GroupDetailFragment {
     public void onStart() {
         super.onStart();
         activity.setDefaultHomeState();
+        if(object == null) tabLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.my_schedule_menu, menu);
+        changeGroupItem = menu.findItem(R.id.action_change_group);
+        searchGroupItem = menu.findItem(R.id.search);
+
+        boolean isChangeItemVisible = PreferenceUtils.isGroupSelected(activity);
+        changeGroupItem.setVisible(isChangeItemVisible);
+        searchGroupItem.setVisible(!isChangeItemVisible);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchGroupItem);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -95,32 +108,43 @@ public class MyScheduleFragment extends GroupDetailFragment {
         object = FakeDataUtils.findGroupById(selectedGroupId);
     }
 
-    @OnClick(R.id.select_group_button)
-    public void onSelectGroupButtonClicked(View view) {
-        UIUtils.hideKeyboard(getActivity());
-        if (object != null) {
-            PreferenceUtils.setSelectedGroup(activity, object.getId());
-            initialize();
-        } else {
-            String text = groupChooser.getText().toString().toLowerCase();
-            String message = null;
-
-            if (text.contains(Constants.EASTER1_TRIGGER)) message = getString(R.string.easter_string_1);
-            if (text.contains(Constants.EASTER_2_TRIGGER)) message = getString(R.string.easter_string_2);
-
-            if (message == null) message = getString(R.string.empty_group_message);
-
-            Snackbar.make(selectGroupContainer, message, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
     private void showGroupSelectionView() {
-        initializeAutoCompleteView();
         object = null;
+        recyclerView.setAdapter(null);
+
+        activity.setTitle(getString(R.string.select_group_title));
 
         tabLayout.setVisibility(View.GONE);
         pager.setVisibility(View.GONE);
         selectGroupContainer.setVisibility(View.VISIBLE);
+        if(changeGroupItem != null) changeGroupItem.setVisible(false);
+
+        makeGroupRequest();
+    }
+
+    private void makeGroupRequest() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initializeSearchViews(FakeDataUtils.allGroups);
+            }
+        }, 1000);
+    }
+
+    private void initializeSearchViews(ArrayList<Group> data) {
+        adapter = new GroupSearchAdapter(data, this);
+        SearchListener listener = new SearchListener(adapter, recyclerView, progressBar);
+
+        searchView.setOnQueryTextListener(listener);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+
+        recyclerView.setVisibility(View.VISIBLE);
+        searchGroupItem.setVisible(true);
+        progressBar.setVisibility(GONE);
     }
 
 
@@ -128,23 +152,19 @@ public class MyScheduleFragment extends GroupDetailFragment {
         tabLayout.setVisibility(View.VISIBLE);
         pager.setVisibility(View.VISIBLE);
         selectGroupContainer.setVisibility(View.GONE);
+        if(searchGroupItem != null) searchGroupItem.setVisible(false);
+        if(changeGroupItem != null) changeGroupItem.setVisible(true);
 
         super.initialize();
     }
 
-    private void initializeAutoCompleteView() {
-        groupChooser.getText().clear();
-        groupChooser.setThreshold(1);
-        groupChooser.setAdapter(new GroupAutocompleteAdapter(activity));
-        groupChooser.setLoadingIndicator(progressBar);
-        groupChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Group group = (Group) adapterView.getItemAtPosition(position);
-                groupChooser.setText(group.getName());
-                object = group;
-            }
-        });
+
+    @Override
+    public void onItemClicked(Group item) {
+        object = item;
+        MenuItemCompat.collapseActionView(searchGroupItem);
+        PreferenceUtils.setSelectedGroup(activity, object.getId());
+        initialize();
     }
 
 }

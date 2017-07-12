@@ -21,7 +21,7 @@ public class FakeDataUtils {
 
     private static final int TEACHERS_COUNT = 30;
 
-    private static final ArrayList<School> allSchools = generateSchools();
+    public static final ArrayList<School> allSchools = generateSchools();
     public static final ArrayList<Group> allGroups = generateGroups();
     public static final ArrayList<Teacher> allTeachers  = generateTeachers();
 
@@ -44,16 +44,6 @@ public class FakeDataUtils {
         return result;
     }
 
-    public static ArrayList<School> findSchools(String schoolName, int maxResults) {
-        ArrayList<School> searchResult = new ArrayList<>();
-        for (School school: allSchools) {
-            if (school.getName().contains(schoolName)) {
-                searchResult.add(school);
-                if (searchResult.size() == maxResults) break;
-            }
-        }
-        return searchResult;
-    }
 
     public static ArrayList<Group> findGroups(String groupName, int maxResults) {
         ArrayList<Group> searchResult = new ArrayList<>();

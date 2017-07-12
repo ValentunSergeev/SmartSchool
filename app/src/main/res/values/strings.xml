@@ -10,22 +10,19 @@
     <string name="select_button_text">Select</string>
 
     <string name="select_school_label">Select School</string>
-    <string name="autocomplete_hint">Begin entering the school\'s name…</string>
-    <string name="empty_school_message">School must be selected</string>
+    <string name="school_search_hint">Enter the school\'s name…</string>
 
     <string name="action_settings">Settings</string>
     <string name="nav_groups">Groups</string>
     <string name="nav_teachers">Teachers</string>
 
     <string name="no_group_selected_label">Select your group first</string>
-    <string name="group_autocomplete_hint">Begin entering group name…</string>
-    <string name="empty_group_message">Group must be selected</string>
     <string name="groups_fragment_title">Groups</string>
     <string name="action_change_group">Change group</string>
 
     <string name="teachers_fragment_title">Teachers</string>
 
-    <string name="easter_string_1" translatable="false">Лиговец? Тебе здесь не рады.</string>
-    <string name="easter_string_2" translatable="false">ЕДПММ forever</string>
+    <string name="choose_school_search_title">Find School</string>
+    <string name="select_group_title">Select Group</string>
 
 </resources>

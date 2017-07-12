@@ -11,7 +11,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
-        android:hint="@string/autocomplete_hint"
+        android:hint="@string/school_search_hint"
         android:imeOptions="actionDone"
         android:inputType="textCapSentences"
         app:layout_constraintLeft_toLeftOf="parent"

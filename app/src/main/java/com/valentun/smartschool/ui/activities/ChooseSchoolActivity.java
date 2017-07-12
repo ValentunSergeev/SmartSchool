@@ -1,29 +1,39 @@
 package com.valentun.smartschool.ui.activities;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.valentun.smartschool.DTO.School;
 import com.valentun.smartschool.R;
-import com.valentun.smartschool.adapters.SchoolAutocompleteAdapter;
-import com.valentun.smartschool.ui.views.DelayAutoCompleteTextView;
-import com.valentun.smartschool.utils.PreferenceUtils;
+import com.valentun.smartschool.adapters.SchoolSearchAdapter;
+import com.valentun.smartschool.listeners.SearchListener;
+import com.valentun.smartschool.utils.FakeDataUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+import static android.view.View.GONE;
 
 public class ChooseSchoolActivity extends BaseActivity {
 
-    @BindView(R.id.autocomplete_chooser_view) DelayAutoCompleteTextView schoolNameChooser;
-    @BindView(R.id.autocomplete_progress_bar) ProgressBar progressBar;
-    @BindView(R.id.school_choose_container) ConstraintLayout container;
 
-    private School mSchool;
+    @BindView(R.id.search_school_progress) ProgressBar progressBar;
+    @BindView(R.id.school_choose_container) LinearLayout container;
+    @BindView(R.id.choose_school_list) RecyclerView recyclerView;
+
+    private MenuItem searchMenuItem;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,31 +42,40 @@ public class ChooseSchoolActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        initializeAutoCompleteView();
+        makeRequest();
     }
 
-    @OnClick(R.id.submit_school_choose)
-    public void onSubmitButtonClicked(View view) {
-        if (mSchool == null) {
-            Snackbar.make(container, getString(R.string.empty_school_message), Snackbar.LENGTH_LONG)
-                    .show();
-        } else {
-            PreferenceUtils.setSelectedSchool(this, mSchool.getId());
-            startNewTaskIntent(MainActivity.class);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        searchMenuItem = menu.findItem(R.id.search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+        searchMenuItem.setVisible(false);
+
+        return true;
     }
 
-    private void initializeAutoCompleteView() {
-        schoolNameChooser.setThreshold(1);
-        schoolNameChooser.setAdapter(new SchoolAutocompleteAdapter(this));
-        schoolNameChooser.setLoadingIndicator(progressBar);
-        schoolNameChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void makeRequest() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                School selectedSchool = (School) adapterView.getItemAtPosition(position);
-                schoolNameChooser.setText(selectedSchool.getName());
-                mSchool = selectedSchool;
+            public void run() {
+                initialize(FakeDataUtils.allSchools);
             }
-        });
+        }, 1000);
+    }
+
+    private void initialize(ArrayList<School> data) {
+        SchoolSearchAdapter adapter = new SchoolSearchAdapter(data);
+        SearchListener listener = new SearchListener(adapter, recyclerView, progressBar);
+
+        searchView.setOnQueryTextListener(listener);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setVisibility(View.VISIBLE);
+        searchMenuItem.setVisible(true);
+        progressBar.setVisibility(GONE);
     }
 }

@@ -6,10 +6,5 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@drawable/ic_search_24dp"
         android:title="@string/choose_school_search_title"
-        app:showAsAction="collapseActionView|ifRoom" />
-
-    <item
-        android:id="@+id/action_change_group"
-        android:title="@string/action_change_group"
-        app:showAsAction="never" />
+        app:showAsAction="collapseActionView|always" />
 </menu>

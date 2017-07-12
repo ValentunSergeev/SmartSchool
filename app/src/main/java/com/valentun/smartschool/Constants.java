@@ -12,4 +12,6 @@ public class Constants {
 
     public static final String EASTER1_TRIGGER = "лига";
     public static final String EASTER_2_TRIGGER = "едпмм";
+
+    public static final int SEARCH_DELAY = 500;
 }
